@@ -98,16 +98,12 @@ public class Pop3 {
 
         // メールサーバと接続が続く限り、ループする
         while(!mailServer.isClosed()){
-            String command;
-            boolean anser;
 
             // メール本文を取得
             subjectListmain = getMessage();
 
-            // 終了コマンドを設定
-            command = "quit";
-            // 通信終了
-            anser = isReady("quit");
+            // 終了コマンドをセットし、通信を終了する
+            isReady("quit");
 
             // サーバーとの通信終了
             mailServer.close();
@@ -126,21 +122,20 @@ public class Pop3 {
      */
     private ArrayList<String> getMessage() throws IOException {
 
+        String subject;
+        String command;
+        String mailCount;
         StringBuffer message = new StringBuffer();
         ArrayList<String> mailList = new ArrayList<String>();
         ArrayList<String> subjectList = new ArrayList<String>();
 
-        String subject = null;
-        boolean anser;
-
-
-        String command = "list";
-        anser = isReady(command);
+        // リストコマンドをセット
+        isReady("list");
 
         // メール件数を取得
         while (true) {
             // メールサーバからのレスポンスを取得
-            String mailCount = reader.readLine();
+            mailCount = reader.readLine();
             // "."がきたら取得終了
             if (mailCount.equals(".")) {
                 break;
@@ -153,7 +148,7 @@ public class Pop3 {
         for (int i = 1; i < mailList.size(); i++) {
             command = "retr" + " " + i;
             // コマンド送信
-            boolean a = isReady(command);
+            isReady(command);
             while (true) {
                 // メールサーバからのレスポンスを取得
                 String mailInfo = reader.readLine();

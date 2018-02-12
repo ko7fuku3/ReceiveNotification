@@ -15,11 +15,11 @@
         android:text="登録"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.552"
+        app:layout_constraintHorizontal_bias="0.559"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.821" />
+        app:layout_constraintVertical_bias="0.939" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -88,9 +88,17 @@
                 android:layout_height="565dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/errMsg_HostName"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="82dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
@@ -106,15 +114,24 @@
                     <EditText
                         android:id="@+id/editTextHostName"
                         android:layout_width="wrap_content"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPersonName" />
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/errMsg_Prot"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="86dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
@@ -130,15 +147,23 @@
                     <EditText
                         android:id="@+id/editTextPort"
                         android:layout_width="wrap_content"
-                        android:layout_height="69dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPersonName" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/errMsg_Account"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="86dp"
+                    android:layout_height="58dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -154,15 +179,23 @@
                     <EditText
                         android:id="@+id/editTextAccount"
                         android:layout_width="wrap_content"
-                        android:layout_height="69dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPersonName" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/errMsg_Password"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="14sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="95dp"
+                    android:layout_height="62dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -178,7 +211,7 @@
                     <EditText
                         android:id="@+id/editTextPassword"
                         android:layout_width="wrap_content"
-                        android:layout_height="66dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPassword" />

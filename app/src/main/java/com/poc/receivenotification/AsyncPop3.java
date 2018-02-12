@@ -58,8 +58,6 @@ public class AsyncPop3 extends AsyncTask<String, Integer, String>{
     @Override
     protected String doInBackground(String... integer) {
 
-        String result = null;
-
         try {
             Pop3 pop3 = new Pop3(receptActivity);
             subjectList = pop3.transaction();

@@ -22,9 +22,9 @@ public class ReceptActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recept);
 
         // ボタンIDの取得
-        btnRecept = (Button) findViewById(R.id.button);
+        btnRecept = findViewById(R.id.button);
         // テキストIDの取得
-        listView = (ListView)findViewById(R.id.listViewId);
+        listView = findViewById(R.id.listViewId);
 
         /**
          * 受信ボタンクリックイベント
