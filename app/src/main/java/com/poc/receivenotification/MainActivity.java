@@ -10,6 +10,9 @@ package com.poc.receivenotification;
         import android.widget.EditText;
         import android.widget.TextView;
 
+        import java.util.regex.Matcher;
+        import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button registButton;
@@ -52,10 +55,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // アカウント情報を保存
-                int leq = saveToAccount();
+                // ホスト名を取得
+                EditText inputHostName = findViewById(R.id.editTextHostName);
+                String hostName = inputHostName.getText().toString();
+
+                // ポート番号を取得
+                EditText inputPortNo = findViewById(R.id.editTextPort);
+                String portNo = inputPortNo.getText().toString();
+
+                // アカウントIDを取得
+                EditText inputAccountID = findViewById(R.id.editTextAccount);
+                String accountID = inputAccountID.getText().toString();
+
+                // パスワードを取得
+                EditText inputPassword = findViewById(R.id.editTextPassword);
+                String password = inputPassword.getText().toString();
+
+                // 入力値チェック
+                int leq = isInputData(hostName, portNo, accountID, password);
+
                 if (leq == 9) {
                 } else {
+                    // 入力情報を端末ストレージに保存
+                    saveToAccount(hostName, portNo, accountID, password);
                     // メール受信画面へ遷移
                     Intent intent = new Intent(getApplication(), ReceptActivity.class);
                     startActivity(intent);
@@ -64,57 +86,91 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //region アカウント情報を端末の内部ストレージに保存
+    //region 入力情報チェック
     /**
-     * アカウント情報を端末の内部ストレージに保存
+     * 入力情報チェック
+     * @param hostName ホスト名
+     * @param portNo ポート番号
+     * @param accountID アカウント情報
+     * @param password パスワード
+     * @return
      */
-    private int saveToAccount() {
+    private  int isInputData(String hostName, String portNo, String accountID, String password) {
 
         int result = 0;
-        // 登録画面の入力情報を取得
-        // ホスト名の取得
-        EditText inputHostName = findViewById(R.id.editTextHostName);
-        String hostName = inputHostName.getText().toString();
+
         // ホスト名の入力値チェック
         if (hostName.length() == 0) {
             TextView errMsg = findViewById(R.id.errMsg_HostName);
             errMsg.setText("ホスト名を入力してください");
             result = 9;
+        } else {
+            TextView errMsg = findViewById(R.id.errMsg_HostName);
+            errMsg.setText("");
         }
 
-        // ポート番号を取得
-        EditText inputPortNo = findViewById(R.id.editTextPort);
-        String portNo = inputPortNo.getText().toString();
         // ポート番号の入力値チェック
         if (portNo.length() == 0) {
             TextView errMsg = findViewById(R.id.errMsg_Prot);
             errMsg.setText("ポート番号を入力してください");
             result = 9;
+        // 数値以外ならエラー文言表示
+        } else if (!isNumber(portNo)) {
+            TextView errMsg = findViewById(R.id.errMsg_Prot);
+            errMsg.setText("数字を入力してください");
+            result = 9;
+        } else {
+            TextView errMsg = findViewById(R.id.errMsg_Prot);
+            errMsg.setText("");
         }
 
-        // アカウントIDの取得
-        EditText inputAccountID = findViewById(R.id.editTextAccount);
-        String accountID = inputAccountID.getText().toString();
         // アカウントの入力値チェック
         if (accountID.length() == 0) {
             TextView errMsg = findViewById(R.id.errMsg_Account);
             errMsg.setText("アカウントIDを入力してください");
             result = 9;
+        } else {
+            TextView errMsg = findViewById(R.id.errMsg_Account);
+            errMsg.setText("");
         }
 
-        // パスワードの取得
-        EditText inputPassword = findViewById(R.id.editTextPassword);
-        String password = inputPassword.getText().toString();
         // パスワードの入力値チェック
         if (password.length() == 0) {
             TextView errMsg = findViewById(R.id.errMsg_Password);
             errMsg.setText("パスワードを入力してください");
             result = 9;
+        } else {
+            TextView errMsg = findViewById(R.id.errMsg_Password);
+            errMsg.setText("");
         }
 
+        // 未入力がある場合、9を返却
         if (result == 9) {
             return 9;
         }
+
+        return 0;
+    }
+    //endregion
+
+    private boolean isNumber(String portNo) {
+        //判定する文字列
+        String str = portNo;
+
+        //判定するパターンを生成
+        Pattern p = Pattern.compile("^[0-9]*$");
+        Matcher m = p.matcher(str);
+
+        return m.find();
+    }
+
+    //region アカウント情報を端末の内部ストレージに保存
+    /**
+     * アカウント情報を端末の内部ストレージに保存
+     */
+    private void saveToAccount(String hostName, String portNo, String accountID, String password) {
+
+
 
         // アカウント情報を保存
         SharedPreferences sharedPreferences=  getSharedPreferences("accountInfo" , MODE_PRIVATE );
@@ -133,8 +189,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("password", password);
 
         editor.commit();
-
-        return 0;
     }
     //endregion
 }
